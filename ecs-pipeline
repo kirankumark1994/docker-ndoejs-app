@@ -2,13 +2,13 @@ pipeline {
     agent any
     
     environment {
-        DOCKER_REGISTRY = 'architectdevops7'
+        DOCKER_REGISTRY = 'kirankumark2'
         ECS_CLUSTER = 'node-cluster'
         ECS_SERVICE_CLIENT = 'react-app-client'
         ECS_SERVICE_SERVER = 'react-app-server'
         AWS_REGION = 'us-east-1'
-        AWS_ACCESS_KEY_ID = 'AKIAYP4HU2GDWSORBPM6'
-        AWS_SECRET_ACCESS_KEY = '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'
+        AWS_ACCESS_KEY_ID = 'AKIAWKYPCT3AIP7FWRYG'
+        AWS_SECRET_ACCESS_KEY = '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'
         TARGET_GROUP_ARN_CLIENT = 'arn:aws:elasticloadbalancing:us-east-1:583863161223:targetgroup/client-service-react-app/04693e4b9cb4a60c'
         TARGET_GROUP_ARN_SERVER = 'arn:aws:elasticloadbalancing:us-east-1:583863161223:targetgroup/server-service-react-app/cbc6b5efe9dd2795'
     }
@@ -16,7 +16,7 @@ pipeline {
     stages {
         stage('Clone Git Repository') {
             steps {
-                git 'https://github.com/architectdevops7/docker-ndoejs-app.git'
+                git 'https://github.com/kirankumark1994/docker-ndoejs-app.git'
             }
         }
         stage('Build and Push Client Images') {
@@ -26,7 +26,7 @@ pipeline {
                         def clientImageTag = "react-client:latest"
                         sh "docker build -t ${clientImageTag} -f Dockerfile.dev ."
                         sh "docker tag ${clientImageTag} ${DOCKER_REGISTRY}/${clientImageTag}"
-                        withDockerRegistry(credentialsId: 'docker-hub-user', url: 'https://index.docker.io/v1/') {
+                        withDockerRegistry(credentialsId: 'docker-hub-credentials', url: 'https://hub.docker.com/u/kirankumark2') {
                             // sh "docker login -u architectdevops7 -p ${env.docker-hub-user}"
                             sh "docker push ${DOCKER_REGISTRY}/${clientImageTag}"
                         }
